@@ -7,6 +7,8 @@ const generateToken = (id) => {
   return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "1d"})
 }
 
+
+// Register User
 const registerUser = asyncHandler(async (req,res) => {
   const {name, email, password} = req.body
 
@@ -62,10 +64,14 @@ const registerUser = asyncHandler(async (req,res) => {
     res.status(400)
     throw new Error("Invalid user data")
   }
+})
 
-
+// Login User
+const loginUser = asyncHandler(async (req,res) => {
+  res.send("Login user")
 })
 
 module.exports = {
-  registerUser
+  registerUser,
+  loginUser
 }

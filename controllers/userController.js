@@ -133,8 +133,16 @@ const logout = asyncHandler(
   }
 )
 
+// Get User Data
+const getUser = asyncHandler(
+  async (req, res) => {
+    res.send("Get User data")
+  }
+)
+
 module.exports = {
   registerUser,
   loginUser,
-  logout
+  logout,
+  getUser
 }

@@ -230,10 +230,14 @@ const changePassword = asyncHandler(
       res.status(400)
       throw new Error("Old password was incorrect")
     }
-
-
-  
 })
+
+const forgotPassword = asyncHandler(
+  async (req, res) => {
+    res.send("Forgot password")
+  }
+)
+
 
 module.exports = {
   registerUser,
@@ -242,5 +246,6 @@ module.exports = {
   getUser,
   loginStatus,
   updateUser,
-  changePassword
+  changePassword,
+  forgotPassword
 }

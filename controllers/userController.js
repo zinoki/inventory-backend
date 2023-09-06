@@ -154,9 +154,17 @@ const getUser = asyncHandler(
   }
 )
 
+// Get login status
+const loginStatus = asyncHandler(
+  async (req, res) => {
+    res.send("Login Status")
+  }  
+)
+
 module.exports = {
   registerUser,
   loginUser,
   logout,
-  getUser
+  getUser,
+  loginStatus
 }

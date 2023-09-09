@@ -279,14 +279,16 @@ const forgotPassword = asyncHandler(
       const subject = "Password Reset Request for Inventory Manger"
       const send_to = user.email
       const sent_from = process.env.EMAIL_USER
+      console.log(resetToken)
 
-      try {
-        await sendEmail(subject, message, send_to, sent_from)
-        res.status(200).json({success: true, message: "Reset Email sent"})
-      } catch (err) {
-        res.status(500)
-        throw new Error("Email not sent. Please try again.")
-      }
+      // try {
+      //   await sendEmail(subject, message, send_to, sent_from)
+      //   res.status(200).json({success: true, message: "Reset Email sent"})
+      // } catch (err) {
+      //   res.status(500)
+      //   throw new Error("Email not sent. Please try again.")
+      // }
+      res.send("success")
 
   }
 )
@@ -295,7 +297,29 @@ const forgotPassword = asyncHandler(
 // Reset Password
 const resetPassword = asyncHandler(
   async(req, res) => {
-    res.send("reset password")
+    const {password} = req.body
+    const {resetToken} = req.params
+
+    // Hash token before comparing to token in DB
+    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex")
+
+    // find token in DB
+    const userToken = await Token.findOne({
+      token: hashedToken,
+      expiresAt: {$gt: Date.now()}
+    })
+    if (!userToken) {
+      res.status(404)
+      throw new Error("Invalid or expired token")
+    }
+
+    // Find User
+    const user = await User.findOne({_id: userToken.userId})
+    user.password = password
+    await user.save()
+    res.status(200).json({
+      message: "Password reset successfully. Please login."
+    })
   }
 )
 

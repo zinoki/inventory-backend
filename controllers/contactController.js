@@ -9,13 +9,13 @@ const contactUs = asyncHandler(
     const user = await User.findById(req.user._id)
 
     if (!user) {
-      res.status(400)
+      // res.status(400)
       throw new Error("User not found. Please sign up")
     }
 
     // Validation
     if (!subject || !message) {
-      res.status(400)
+      // res.status(400)
       throw new Error("Please add subject and message")
     }
 

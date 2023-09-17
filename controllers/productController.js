@@ -9,7 +9,7 @@ const createProduct = asyncHandler(
     const { name, sku, category, quantity, price, description } = req.body
     // Validation 
     if (!name ||!category || !quantity || !price ||!description) {
-      res.status(400)
+      // res.status(400)
       throw new Error("Please fill in all fields")
     }
 
@@ -65,13 +65,13 @@ const getProduct = asyncHandler(
     const product = await Product.findById(req.params.id)
     // If product doesn't exist
   if (!product) {
-    res.status(404) 
+    // res.status(404) 
     throw new Error("Product not found")
   }
 
   // Match product to user
   if (product.user.toString() !== req.user.id) {
-    res.status(401)
+    // res.status(401)
     throw new Error("User not authorized")
   }
   res.status(200).json(product)
@@ -84,13 +84,13 @@ const deleteProduct = asyncHandler(
     const product = await Product.findById(req.params.id)
     // If product doesn't exist
   if (!product) {
-    res.status(404) 
+    // res.status(404) 
     throw new Error("Product not found")
   }
 
   // Match product to user
   if (product.user.toString() !== req.user.id) {
-    res.status(401)
+    // res.status(401)
     throw new Error("User not authorized")
   }
 
@@ -108,13 +108,13 @@ const updateProduct = asyncHandler(
     const product = await Product.findById(id)
     // If product does not exist
     if (!product) {
-      res.status(404)
+      // res.status(404)
       throw new Error("Product not found")
     }
 
     // Match product to user
     if (product.user.toString() !== req.user.id) {
-      res.status(401)
+      // res.status(401)
       throw new Error('User not authorized')
     } 
 

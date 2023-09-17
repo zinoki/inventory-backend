@@ -18,9 +18,11 @@ const registerUser = asyncHandler(async (req,res) => { // async handler from #61
 
   // Validation
   if (!name || !email || !password) {
+    // res.status(400)
     throw new Error("Please fill in all required fields")
   }
   if (password.length < 6) {
+    // res.status(400)
     throw new Error("Password must be at least 6 characters")
   }
 
@@ -28,7 +30,7 @@ const registerUser = asyncHandler(async (req,res) => { // async handler from #61
   const userExists = await User.findOne({email})
 
   if (userExists) {
-    res.status(400)
+    // res.status(400)
     throw new Error("Email has already been registered")
   }  
   
@@ -63,7 +65,7 @@ const registerUser = asyncHandler(async (req,res) => { // async handler from #61
       token
     })
   } else {
-    res.status(400)
+    // res.status(400)
     throw new Error("Invalid user data")
   }
 })
@@ -73,6 +75,7 @@ const loginUser = asyncHandler(async (req,res) => { // async handler from #61 re
   const {email, password} = req.body
   // Validate Request
   if (!email || !password) {
+    // res.status(400)
     throw new Error("Please enter email and password")
   }
 
@@ -111,7 +114,7 @@ const loginUser = asyncHandler(async (req,res) => { // async handler from #61 re
       token
     })
   } else {
-    res.status(400)
+    // res.status(400)
     throw new Error("Invalid email or password")
   }
 
@@ -148,7 +151,7 @@ const getUser = asyncHandler(
         bio
       })
     } else {
-      res.status(400)
+      // res.status(400)
       throw new Error("User not found.")
     }
   }
@@ -195,7 +198,7 @@ const updateUser = asyncHandler(
         bio: updatedUser.bio
       })
     } else {
-      res.status(404)
+      // res.status(404)
       throw new Error("User not found")
     }
 
@@ -208,13 +211,13 @@ const changePassword = asyncHandler(
     const user = await User.findById(req.user._id)
     const { oldPassword, password } = req.body
     if (!user) {
-      res.status(400)
+      // res.status(400)
       throw new Error("User not found. Please sign up")
     }
 
     // Validate
     if (!oldPassword || !password) {
-      res.status(400)
+      // res.status(400)
       throw new Error("Please add old and new password")
     }
 
@@ -227,7 +230,7 @@ const changePassword = asyncHandler(
       await user.save()
       res.status(200).send("Password change successful")
     } else {
-      res.status(400)
+      // res.status(400)
       throw new Error("Old password was incorrect")
     }
 })
@@ -238,7 +241,7 @@ const forgotPassword = asyncHandler(
     const user = await User.findOne({email})
 
     if (!user) {
-      res.status(404)
+      // res.status(404)
       throw new Error("User does not exist")
     }
     // Delete token if it exists in DB
@@ -306,7 +309,7 @@ const resetPassword = asyncHandler(
       expiresAt: {$gt: Date.now()}
     })
     if (!userToken) {
-      res.status(404)
+      // res.status(404)
       throw new Error("Invalid or expired token")
     }
 

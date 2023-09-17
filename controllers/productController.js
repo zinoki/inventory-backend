@@ -22,7 +22,7 @@ const createProduct = asyncHandler(
         uploadedFile = await cloudinary.uploader.upload(req.file.path, {folder: "InventoryApp", resource_type: "image"})
       } catch (err) {
         console.error("Error uploading the image:", err);  // Log the error
-        return res.status(500).json({error: "Image could not be uuploaded"});
+        return res.status(500).json({error: "Image could not be uploaded"});
     }
       fileData = {
         fileName: req.file.originalname,
@@ -132,7 +132,7 @@ const updateProduct = asyncHandler(
         })
       } catch(err) {
         console.error("Error uploading the image:", err);  // Log the error
-        res.status(500).json({error: "Image could not be uploadedd"});
+        res.status(500).json({error: "Image could not be uploaded"});
     }
       fileData = {
         fileName: req.file.originalname,

@@ -18,11 +18,9 @@ const registerUser = asyncHandler(async (req,res) => { // async handler from #61
 
   // Validation
   if (!name || !email || !password) {
-    res.status(400)
     throw new Error("Please fill in all required fields")
   }
   if (password.length < 6) {
-    res.status(400)
     throw new Error("Password must be at least 6 characters")
   }
 
@@ -75,14 +73,13 @@ const loginUser = asyncHandler(async (req,res) => { // async handler from #61 re
   const {email, password} = req.body
   // Validate Request
   if (!email || !password) {
-    res.status(400)
     throw new Error("Please enter email and password")
   }
 
   // Check if user exists
   const user = await User.findOne({email})
   if (!user) {
-    res.status(400)
+    // res.status(400)
     throw new Error("User not found. Please register.")
   }
 
